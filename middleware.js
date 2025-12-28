@@ -11,7 +11,7 @@ module.exports.isLoggedIn = (req, res, next) => {
     // Redirect Url:( when we try to edit then not login ka option aayega or after ,login it should redirect on edit page so this method is used)
     req.session.redirectUrl = req.originalUrl;
     req.flash("error", "you must be logged in!");
-    res.redirect("/login");
+    return res.redirect("/login");
   }
   next();
 };
@@ -29,7 +29,12 @@ module.exports.saveRedirectUrl = (req, res, next) => {
 module.exports.isOwner = async (req, res, next) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
-  if (!listing.owner._id.equals(res.locals.currUser._id)) {
+  
+  if (!listing) {
+    req.flash("error", "Listing not found!");
+    return res.redirect("/listings");
+  }
+  if (!listing.owner.equals(req.user._id)) {
     req.flash("error", "You Don't have Permission!");
     return res.redirect(`/listings/${id}`);
   }

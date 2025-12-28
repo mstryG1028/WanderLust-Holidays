@@ -1,33 +1,39 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-  <h1 class="col-6 offset-3">Login</h1>
-  <div class="col-6 offset-3">
-    <form action="/login" method="POST" class="needs-validation" novalidate>
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Username"
-          class="form-control"
-          required
-        />
-      </div>
+<div class="row justify-content-center login-section">
+  <div class="col-lg-4 col-md-6 col-sm-10">
+    <div class="card login-card">
+      <div class="card-body">
+        <h2 class="text-center mb-4">Login</h2>
 
-      <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="password"
-          class="form-control"
-          required
-        />
+        <form action="/login" method="POST" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Enter username"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter password"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <button class="btn btn-login w-100 mt-2">Login</button>
+        </form>
       </div>
-      <button class="btn btn-success btn-md">Login</button>
-    </form>
+    </div>
   </div>
 </div>

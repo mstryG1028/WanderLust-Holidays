@@ -33,6 +33,7 @@ module.exports.renderSignUpForm=(req, res) => {
   module.exports.login=async (req, res) => {
     req.flash("success", "welcome back to Wanderlust");
     let redirectUrl = res.locals.redirectUrl || "/listings"; //if we just login then redirect listings else redirectUrl
+    delete req.session.redirectUrl;
     res.redirect(redirectUrl);
   };
 

@@ -1,24 +1,4 @@
-<style>
-  .search-btn{
-    background-color: #fe424d;
-    color: white;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-  }
-  .search-btn:hover{
-    background-color: #fe424d;
-    color: white;
-  }
-  .search-btn i{
-display: inline;
-margin-right: 0.5rem;
-  }
-  .search-inp{
-border-radius: 25px;
-padding: 0.5rem 3rem 0.5rem 3rem;
 
-  }
-</style>
 
 <nav class="navbar navbar-expand-lg bg-body-light sticky-top">
   <div class="container-fluid">
@@ -47,17 +27,19 @@ padding: 0.5rem 3rem 0.5rem 3rem;
             <i class="fa-solid fa-magnifying-glass"></i>Search</button>
         </form>
       </div>
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new"> Airbnb your Home </a>
-        <% if(!currUser){%>
-        <!--  if user is loggedin then show these two options -->
-        <a class="nav-link" aria-current="page" href="/signup"><b>Sign Up</b></a>
-        <a class="nav-link" href="/login"><b>Log in</b></a>
-        <% } %> <% if(currUser){ %>
-        <a class="nav-link" href="/logout"><b>Log Out</b> </a>
-        <!-- else this -->
-        <% } %>
-      </div>
+     <div class="navbar-nav ms-auto">
+
+  <% if (currUser) { %>
+    <a class="nav-link" href="/listings/new">Airbnb your Home</a>
+    <a class="nav-link" href="/logout"><b>Log out</b></a>
+
+  <% } else { %>
+    <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+    <a class="nav-link" href="/login"><b>Log in</b></a>
+  <% } %>
+
+</div>
+
     </div>
   </div>
 </nav>

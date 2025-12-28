@@ -1,7 +1,7 @@
 
-if(process.env.NODE_ENV != "production"){
-  require("dotenv").config();
-}
+// if(process.env.NODE_ENV !== "production"){
+//   require("dotenv").config();
+// }
 
 const express = require("express");
 const app = express();
@@ -12,8 +12,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
 const mongoose = require("mongoose");
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl=process.env.ATLASDB_URL;
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderLust1";
+// const dbUrl=process.env.ATLASDB_URL;
 main()
   .then(() => {
     console.log("connected to DB");
@@ -23,7 +23,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(dbUrl);
+  await mongoose.connect(MONGO_URL);
 }
 
 
@@ -43,14 +43,14 @@ const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
-
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const store=MongoStore.create({
-  mongoUrl:dbUrl,
+  mongoUrl:MONGO_URL,
   crypto:{
     secret:process.env.SECRET,
   
@@ -62,7 +62,7 @@ store.on("error",()=>{
 })
 const sessionOptions = {   //used to store some info of user from current session
   store,
-  secret: process.env.SECRET,
+  secret: process.env.SECRET|| "mySecret",
   resave: false,
   saveUninitialized: true,
   cookie:{
@@ -72,7 +72,6 @@ const sessionOptions = {   //used to store some info of user from current sessio
   }
   
 };
-
 
 
 app.use(session(sessionOptions)); //when we open multiple tab in same browser of same website then we need session
@@ -95,6 +94,7 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //custom error handling
 app.all("*", (req, res, next) => {
@@ -102,9 +102,11 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  let { statusCode } = err;
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = " Something Went Wrong!";
   res.status(statusCode).render("error.ejs", { err });
 });
+
 
 app.listen(port, () => {
   console.log(`server is listening to: ${port}`);
