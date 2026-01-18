@@ -15,7 +15,8 @@ module.exports.renderSignUpForm=(req, res) => {
       // still this method will declare all these fields using passport
       req.login(registeredUser, (err) => {
         if (err) {
-          next();
+           req.flash("error", "Login failed. Please try again.");
+         return res.redirect("/login");
         }
         req.flash("success", "Welcome To  World Wanderlust!");
         res.redirect("/listings");
