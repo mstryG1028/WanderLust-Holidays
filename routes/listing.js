@@ -24,8 +24,9 @@ router.route("/")
 .post(
   isLoggedIn,
  // this middleware will check either all info is correct or not before saving into database
-  upload.single('image'),
-  validateListing,
+ validateListing, 
+ upload.single('image'),
+  
   wrapAsync(listingController.createListing)
 );
 

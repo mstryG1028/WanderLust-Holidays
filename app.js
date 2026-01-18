@@ -1,11 +1,9 @@
 
-if(process.env.NODE_ENV !== "production"){
-  require("dotenv").config();
-}
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT|| 8001;
 const User = require("./models/user");
 const path = require("path");
 const methodOverride = require("method-override");
@@ -13,9 +11,12 @@ const ejsMate = require("ejs-mate");
 
 const mongoose = require("mongoose");
 // const MONGO_URL = "mongodb://127.0.0.1:27017/wanderLust1";
-const MONGO_URL=process.env.MONGO_URL;
+const MONGO_URL= process.env.MONGO_URL;
 main()
   .then(() => {
+    console.log("MONGO_URL =", process.env.MONGO_URL);
+        console.log("SECRET =", process.env.SECRET);
+
     console.log("connected to DB");
   })
   .catch((err) => {
@@ -49,13 +50,9 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 const store=MongoStore.create({
-  mongoUrl:process.env.MONGO_URL,
-  crypto:{
-    secret:process.env.SECRET,
-  
-  },
+  mongoUrl: process.env.MONGO_URL,
+
   touchAfter: 24*3600,
 });
 store.on("error",()=>{
@@ -68,7 +65,6 @@ const sessionOptions = {   //used to store some info of user from current sessio
   saveUninitialized: false,
   cookie:{
     expires:Date.now()+7*24*60*60*1000,
-    secure: process.env.NODE_ENV === "production",
     maxAge:7*24*60*60*1000,
     httpOnly:true,
   }
@@ -96,23 +92,24 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.get("/", (req, res) => {
+app.get("/",(req,res)=>{
   res.redirect("/listings");
-});
-
+})
 //custom error handling
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "page not found"));
 });
 
 app.use((err, req, res, next) => {
+  console.log("🔥 ERROR DETAILS:", err);
   const { statusCode = 500 } = err;
-  if (!err.message) err.message = " Something Went Wrong!";
+  if (!err.message) err.message = "Something Went Wrong!";
   res.status(statusCode).render("error.ejs", { err });
 });
 
 
 app.listen(port, () => {
-  console.log(`server is running on: ${port}`);
+  console.log(`server is listening to: ${port}`);
 });

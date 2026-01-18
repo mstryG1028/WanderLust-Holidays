@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review");
 const sampleListings=require("../init/data");
-const connectDB=async()=>{
-  await mongoose.connect("mongodb://127.0.0.1:27017/wanderLust1");
-  console.log("conn to DB")
-}
+// const connectDB=async()=>{
+//   await mongoose.connect("mongodb://127.0.0.1:27017/wanderLust1");
+//   console.log("conn to DB")
+// }
 const listingSchema = new Schema({
   title: {
     type: String,
