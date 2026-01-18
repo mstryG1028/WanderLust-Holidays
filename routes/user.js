@@ -11,7 +11,7 @@ const userController = require("../controllers/users.js");
 
 router.route("/signup")
 .get( userController.renderSignUpForm)
-.post( wrapAsync(userController.signUp));
+.post( userController.signUp);
 
 
 router.route("/login")

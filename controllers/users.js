@@ -16,14 +16,14 @@ module.exports.renderSignUpForm=(req, res) => {
       req.login(registeredUser, (err) => {
         if (err) {
            req.flash("error", "Login failed. Please try again.");
-         return res.redirect("/login");
+         return res.redirect("/signUp");
         }
         req.flash("success", "Welcome To  World Wanderlust!");
-        res.redirect("/listings");
+         return res.redirect("/listings");
       });
     } catch (e) {
       req.flash("error", e.message);
-      res.redirect("/signup");
+       return res.redirect("/signup");
     }
   };
 

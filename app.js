@@ -49,8 +49,9 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 const store=MongoStore.create({
-  mongoUrl:MONGO_URL,
+  mongoUrl:process.env.MONGO_URL,
   crypto:{
     secret:process.env.SECRET,
   
@@ -62,11 +63,12 @@ store.on("error",()=>{
 })
 const sessionOptions = {   //used to store some info of user from current session
   store,
-  secret: process.env.SECRET|| "mySecret",
+  secret: process.env.SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie:{
     expires:Date.now()+7*24*60*60*1000,
+    secure: process.env.NODE_ENV === "production",
     maxAge:7*24*60*60*1000,
     httpOnly:true,
   }
@@ -94,7 +96,7 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
