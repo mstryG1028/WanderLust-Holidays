@@ -1,19 +1,19 @@
 
-// if(process.env.NODE_ENV !== "production"){
-//   require("dotenv").config();
-// }
+if(process.env.NODE_ENV !== "production"){
+  require("dotenv").config();
+}
 
 const express = require("express");
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 const User = require("./models/user");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
 const mongoose = require("mongoose");
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderLust1";
-// const dbUrl=process.env.ATLASDB_URL;
+// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderLust1";
+const MONGO_URL=process.env.MONGO_URL;
 main()
   .then(() => {
     console.log("connected to DB");
@@ -95,6 +95,9 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 
 //custom error handling
 app.all("*", (req, res, next) => {
@@ -109,5 +112,5 @@ app.use((err, req, res, next) => {
 
 
 app.listen(port, () => {
-  console.log(`server is listening to: ${port}`);
+  console.log(`server is running on: ${port}`);
 });
