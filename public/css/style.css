@@ -67,6 +67,9 @@ main {
   width: 230px;
   transition: all 0.3s ease;
 }
+.search-inp:hover{
+  width: 400px;
+}
 
 .search-inp:focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.25);
@@ -641,4 +644,14 @@ footer.footer a:hover {
     display: block;
     margin: 0.3rem 0;
   }
+}
+
+
+.review-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }

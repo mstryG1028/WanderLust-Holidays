@@ -2,7 +2,7 @@ const Listing=require("../models/listing");
 const Review=require("../models/review");
 module.exports.createReview=async (req, res, next) => {
     // Ensure that the request body contains 'comment' and 'rating'
-    const { comment, rating } = req.body;
+    const { comment, rating } = req.body.review;
 
     let listing = await Listing.findById(req.params.id);
 
@@ -22,7 +22,7 @@ module.exports.createReview=async (req, res, next) => {
 
 module.exports.deleteReview=async (req, res) => {
     let { id, reviewId } = req.params;
-    await Listing.findByIdAndUpdate(id, { $pull: { review: reviewId } }); // it will delete the partucular id from listing.reviews array
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } }); // it will delete the partucular id from listing.reviews array
     await Review.findByIdAndDelete(reviewId);
     req.flash("success", " Review Deleted!");
     res.redirect(`/listings/${id}`);
