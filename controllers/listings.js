@@ -16,7 +16,6 @@ module.exports.createListing = async (req, res) => {
     price,
     country,
     location,
-    image,
     owner: req.user._id
   });
 

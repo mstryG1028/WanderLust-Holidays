@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-
+const multer = require("multer");
+const path = require("path"); 
 const wrapAsync = require("../utils/wrapAsync.js");
 const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 const listingController = require("../controllers/listings.js");
 
 // used for storing images and videos
-const multer=require("multer");
+
 // const { storage }=require("../cloudConfig.js");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, path.join(__dirname, "../uploads")),
