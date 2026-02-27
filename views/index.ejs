@@ -1,0 +1,34 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="listing-section">
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+
+    <% if (Array.isArray(allListings) && allListings.length > 0) { %>
+
+      <% allListings.forEach(listing => { %>
+        <div class="col">
+          <div class="card listing-card h-100">
+            <a href="/listings/<%= listing._id %>">
+               <img
+        src="<%= 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688' %>"
+        class="card-img-top listing-img"
+        alt="listing image"
+      />
+            </a>
+            <div class="card-body">
+              <h5 class="card-title"><%= listing.title %></h5>
+              <p class="card-text"><%= listing.description %></p>
+                            <p class="card-text"> <b>Price:</b><%= listing.price %></p>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+
+    <% } else { %>
+      <div class="col">
+        <p class="text-center text-muted">No listings available</p>
+      </div>
+    <% } %>
+
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-xl-7 col-lg-8 col-md-10">
+      <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <!-- Heading -->
+          <h2 class="text-center fw-bold mb-1">Edit Listing</h2>
+          <p class="text-center text-muted mb-4">
+            Update your place details carefully
+          </p>
+
+          <form
+            method="POST"
+            action="/listings/<%= listing._id %>?_method=PUT"
+            enctype="multipart/form-data"
+            class="needs-validation"
+            novalidate
+          >
+
+            <!-- Title -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Title</label>
+              <input
+                type="text"
+                name="title"
+                value="<%= listing.title %>"
+                class="form-control form-control-lg"
+                placeholder="Beautiful beach house"
+                required
+              />
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Description</label>
+              <textarea
+                name="description"
+                rows="4"
+                class="form-control"
+                placeholder="Describe your place..."
+                required
+              ><%= listing.description %></textarea>
+            </div>
+
+            <!-- Image Preview -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Current Image</label>
+              <div class="image-preview text-center p-3 border rounded-4">
+                <img
+                  src="<%= originalImageUrl %>"
+                  alt="Listing Image"
+                  class="img-fluid rounded-3"
+                />
+              </div>
+            </div>
+
+            <!-- Upload Image -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Change Image</label>
+              <input
+                type="file"
+                name="image"
+                class="form-control form-control-lg"
+              />
+              <small class="text-muted">
+                Upload a high-quality image (optional)
+              </small>
+            </div>
+
+            <!-- Price & Country -->
+            <div class="row g-3 mb-4">
+              <div class="col-md-4">
+                <label class="form-label fw-semibold">Price (₹)</label>
+                <input
+                  type="number"
+                  name="price"
+                  value="<%= listing.price %>"
+                  class="form-control form-control-lg"
+                  required
+                />
+              </div>
+
+              <div class="col-md-8">
+                <label class="form-label fw-semibold">Country</label>
+                <input
+                  type="text"
+                  name="country"
+                  value="<%= listing.country %>"
+                  class="form-control form-control-lg"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Location</label>
+              <input
+                type="text"
+                name="location"
+                value="<%= listing.location %>"
+                class="form-control form-control-lg"
+                required
+              />
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-grid gap-3">
+              <button type="submit" class="btn btn-primary btn-lg fw-bold">
+                Update Listing
+              </button>
+
+              <a
+                href="/listings/<%= listing._id %>"
+                class="btn btn-outline-secondary btn-lg"
+              >
+                Cancel
+              </a>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
