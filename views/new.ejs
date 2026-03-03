@@ -49,11 +49,15 @@
             />
           </div>
           <!-- CATEGORY -->
-          <div>
-  <label for="category">Category</label>
-  <select name="category" id="category" required>
+         <div class="mb-3">
+  <label for="category" class="form-label">Category</label>
+  <select 
+    name="category" 
+    id="category" 
+    required 
+    class="form-control"
+  >
     <option value="">-- Select Category --</option>
-
     <option value="Trending">Trending</option>
     <option value="Rooms">Rooms</option>
     <option value="Iconic Cities">Iconic Cities</option>
@@ -66,8 +70,8 @@
     <option value="Beach">Beach</option>
     <option value="Treehouses">Treehouses</option>
     <option value="Historical">Historical</option>
-
   </select>
+  <div class="invalid-feedback">Please select a category</div>
 </div>
           <!-- PRICE + COUNTRY -->
           <div class="row">
