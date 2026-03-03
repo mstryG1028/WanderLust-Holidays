@@ -1,18 +1,29 @@
 const Listing = require("../models/listing");
 
-module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("index", { allListings });
-};
+// module.exports.index = async (req, res) => {
+//   const allListings = await Listing.find({});
+//   res.render("index", { allListings });
+// };
 
+module.exports.index = async (req, res) => {
+  const { category } = req.query;
+
+  const filter = category ? { category } : {};
+
+  const allListings = await Listing.find(filter);
+
+  res.render("index", { allListings, category });
+};
 module.exports.newListing = (req, res) => res.render("new");
 
 module.exports.createListing = async (req, res) => {
-  const { title, description, price, country, location, image } = req.body;
+  const { title, description,category, price, country, location, image } = req.body;
 
+  
   const newListing = new Listing({
     title,
     description,
+    category,
     price,
     country,
     location,

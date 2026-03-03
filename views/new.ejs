@@ -11,9 +11,7 @@
           action="/listings"
           class="needs-validation"
           novalidate
-         
         >
-
           <!-- TITLE -->
           <div class="mb-3">
             <label class="form-label">Title</label>
@@ -50,7 +48,27 @@
               placeholder="https://example.com/image.jpg"
             />
           </div>
+          <!-- CATEGORY -->
+          <div>
+  <label for="category">Category</label>
+  <select name="category" id="category" required>
+    <option value="">-- Select Category --</option>
 
+    <option value="Trending">Trending</option>
+    <option value="Rooms">Rooms</option>
+    <option value="Iconic Cities">Iconic Cities</option>
+    <option value="Mountains">Mountains</option>
+    <option value="Castles">Castles</option>
+    <option value="Amazing Pools">Amazing Pools</option>
+    <option value="Camping">Camping</option>
+    <option value="Farms">Farms</option>
+    <option value="Arctic">Arctic</option>
+    <option value="Beach">Beach</option>
+    <option value="Treehouses">Treehouses</option>
+    <option value="Historical">Historical</option>
+
+  </select>
+</div>
           <!-- PRICE + COUNTRY -->
           <div class="row">
             <div class="col-md-4 mb-3">
@@ -91,7 +109,6 @@
           </div>
 
           <button class="btn add-btn w-100">Add Listing</button>
-
         </form>
       </div>
     </div>
