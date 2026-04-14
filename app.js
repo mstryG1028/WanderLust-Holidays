@@ -8,7 +8,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require("mongoose");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo");// used to store session data in mongodb
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -19,7 +19,8 @@ const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 const ExpressError = require("./utils/ExpressError");
 
-const MONGO_URL = process.env.MONGO_URL;
+// const MONGO_URL = process.env.MONGO_URL;
+const MONGO_URL ="mongodb://127.0.0.1:27017/wanderLust1";
 
 mongoose.connect(MONGO_URL)
   .then(() => console.log("Connected to DB"))

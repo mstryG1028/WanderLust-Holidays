@@ -1,55 +1,110 @@
-<style>
-  #filters-nav {
-  height: 70px;
+
+  <style>
+    body {
+      margin: 0;
+    }
+
+    /* NAVBAR */
+    #filters-nav {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #ebebeb;
+      background: #fff;
+      padding: 0 2rem;
+    }
+
+    /* LEFT FILTERS */
+    #filters {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    #filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter {
+      text-decoration: none;
+      color: #717171;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: 0.2s ease;
+      opacity: 0.85;
+      white-space: nowrap;
+    }
+
+    .filter i {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .filter:hover {
+      color: #000;
+      opacity: 1;
+    }
+
+    /* RIGHT ICON */
+    #filter-wrapper {
+      position: relative;
+    }
+#filter-menu-btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #ebebeb;
-  background: #fff;
-  padding: 0 2rem;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #333;
+  transition: all 0.2s ease;
 }
 
-#filters {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  overflow-x: auto;
-  scrollbar-width: none;
+/* Hover effect */
+#filter-menu-btn:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-color: #aaa;
 }
 
-#filters::-webkit-scrollbar {
-  display: none;
+/* Icon size */
+#filter-menu-btn i {
+  font-size: 1rem;
 }
+    
 
-.filter {
-  text-decoration: none;
-  color: #717171;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.75rem;
-  font-weight: 500;
-  transition: 0.2s ease;
-  opacity: 0.85;
-}
-
-.filter i {
-  font-size: 1.2rem;
-  margin-bottom: 4px;
-}
-
-.filter:hover {
-  color: #000;
-  opacity: 1;
-
-}
-</style>
+    /* DROPDOWN BOX */
+    #filter-box {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      width: 250px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: none;
+      padding: 12px;
+      z-index: 1000;
+    }
+  </style>
 </head>
+
 <body>
 
 <nav id="filters-nav">
-  <div id="filters">
 
+  <!-- LEFT SIDE FILTERS -->
+  <div id="filters">
 
     <a href="/listings" class="filter">
       <i class="fa-solid fa-fire"></i>
@@ -101,18 +156,68 @@
       Beach
     </a>
 
-
     <a href="/listings?category=Treehouses" class="filter">
       <i class="fa-solid fa-tree"></i>
       Treehouses
     </a>
-
 
     <a href="/listings?category=Historical" class="filter">
       <i class="fa-solid fa-landmark"></i>
       Historical
     </a>
 
+  </div>
+
+  <!--  FILTER  -->
+  <div id="filter-wrapper">
+
+    <div id="filter-menu-btn">
+  <i class="fa-solid fa-sliders"></i>
+  <span>Filters</span>
+</div>
+
+    <!--  FILTER BOX -->
+    <div id="filter-box">
+      <form method="GET" action="/listings">
+
+        <input 
+          type="text" 
+          name="location" 
+          placeholder="Location"
+          class="form-control mb-2">
+
+        <input 
+          type="number" 
+          name="price" 
+          min="100"
+          placeholder="Max Price"
+          step="100" 
+          class="form-control mb-2">
+
+        <button class="btn btn-dark w-100">Apply</button>
+
+      </form>
+    </div>
 
   </div>
+
 </nav>
+
+<!-- JS -->
+<script>
+  const btn = document.getElementById("filter-menu-btn");
+  const box = document.getElementById("filter-box");
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", (e) => {  // click anywhere to close the filter box
+    if (!box.contains(e.target)) {
+      box.style.display = "none";
+    }
+  });
+</script>
+
+</body>

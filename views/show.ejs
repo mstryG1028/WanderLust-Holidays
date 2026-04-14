@@ -30,7 +30,11 @@
         <div class="card-body">
 
           <p class="owner-text mb-2">
-            Hosted by <b><%= listing.owner.username %></b>
+           <% if (listing.owner && listing.owner.username) { %>
+  Hosted by <b><%= listing.owner.username %></b>
+<% } else{ %>
+Hosted by <b></b>
+<% } %>
           </p>
 
           <p class="description-text">
@@ -51,7 +55,7 @@
             📍 <%= listing.location %>, <%= listing.country %>
           </p>
 
-          <% if (currUser && listing.owner.equals(currUser._id)) { %>
+          <% if (currUser && listing.owner &&listing.owner.equals(currUser._id) ) { %>
             <div class="edit-delete-wrapper mt-4">
               <a class="btn btn-dark"
                  href="/listings/<%= listing._id %>/edit">

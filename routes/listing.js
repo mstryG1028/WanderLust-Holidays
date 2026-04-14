@@ -17,7 +17,7 @@ const upload=multer({ storage });
 
 
 // NOTE: (router.route is used to minimizw the code when two routes are same then those are written in same route express("/"));
-
+router.get("/search", listingController.searchListings);
 router.route("/")
 //ALL LISTS
 .get( wrapAsync(listingController.index) ) //for getting listings, all the code is written in controller.listing file using mvc frameworks
@@ -66,5 +66,6 @@ router.get(
   isOwner, // before editing the listing it will check either user is loggedIn or not
   wrapAsync(listingController.editListing)
 );
+
 
 module.exports = router;
