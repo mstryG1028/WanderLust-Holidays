@@ -11,7 +11,8 @@ module.exports.index = async (req, res) => {
   }
 
   // Location filter (case-insensitive)
-  if (location && location.trim() !== "") {   // trim is used to remove extra spaces from seach content
+  if (location && location.trim() !== "") {
+    // trim is used to remove extra spaces from seach content
     filter.location = { $regex: location, $options: "i" };
   }
 
@@ -26,11 +27,10 @@ module.exports.index = async (req, res) => {
       { country: { $regex: search, $options: "i" } },
       { category: { $regex: search, $options: "i" } },
     ];
-     if (!isNaN(search)) {
-    filter.$or.push({ price: Number(search) });
+    if (!isNaN(search)) {
+      filter.$or.push({ price: Number(search) });
+    }
   }
-  }
- 
 
   const allListings = await Listing.find(filter);
 
@@ -137,3 +137,19 @@ module.exports.searchListings = async (req, res) => {
   console.log("Results", allListings);
   res.render("index", { allListings });
 };
+
+
+
+module.exports.bookList = async (req, res) => {
+    const { id } = req.params;
+
+    const listing = await Listing.findById(id).populate("owner");
+
+    if (!listing) {
+        req.flash("error", "Listing not found");
+        return res.redirect("/listings");
+    }
+
+    res.render("booking", { listing });
+};
+

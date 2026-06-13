@@ -26,10 +26,12 @@ router
       const redirectUrl = res.locals.redirectUrl || "/listings";
       delete req.session.redirectUrl;
       return res.redirect(redirectUrl);
-    }
+    },
   );
 
 // ================= LOGOUT =================
 router.get("/logout", userController.logout);
+
+
 
 module.exports = router;

@@ -1,0 +1,326 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    body{
+        background:#f8f9fa;
+    }
+
+    .booking-card{
+        border:none;
+        border-radius:16px;
+        box-shadow:0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .listing-img{
+        width:100%;
+        height:250px;
+        object-fit:cover;
+        border-radius:16px 16px 0 0;
+    }
+
+    .sticky-summary{
+        position:sticky;
+        top:100px;   /* navbar ke niche */
+        z-index:10;
+    }
+
+    .price{
+        font-size:1.5rem;
+        font-weight:700;
+        color:#198754;
+    }
+
+    .section-title{
+        font-weight:700;
+        margin-bottom:1rem;
+    }
+
+    .form-control,
+    .form-select{
+        padding:.75rem;
+    }
+
+    .booking-btn{
+        padding:.9rem;
+        font-size:1.1rem;
+        font-weight:600;
+    }
+
+    @media(max-width:992px){
+        .sticky-summary{
+            position:static;
+        }
+    }
+</style>
+
+<div class="container py-5">
+
+    <div class="row g-4">
+
+        <!-- LEFT SIDE -->
+        <div class="col-lg-8">
+
+            <div class="card booking-card">
+                <div class="card-body p-4">
+
+                    <h2 class="section-title">
+                        Complete Your Booking
+                    </h2>
+
+                    <form
+                        action="/bookings"
+                        method="POST">
+
+                        <input
+                            type="hidden"
+                            name="listingId"
+                            value="<%= listing._id %>">
+
+                        <!-- Guest Details -->
+
+                        <h5 class="mb-3">Guest Details</h5>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    First Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="firstName"
+                                    class="form-control"
+                                    required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    Last Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="lastName"
+                                    class="form-control"
+                                    required>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control"
+                                required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                name="phone"
+                                class="form-control"
+                                required>
+                        </div>
+
+                        <hr>
+
+                        <!-- Stay Details -->
+
+                        <h5 class="my-4">
+                            Stay Details
+                        </h5>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    Check In
+                                </label>
+
+                                <input
+                                    type="date"
+                                    name="checkIn"
+                                    class="form-control"
+                                    required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    Check Out
+                                </label>
+
+                                <input
+                                    type="date"
+                                    name="checkOut"
+                                    class="form-control"
+                                    required>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">
+                                    Guests
+                                </label>
+
+                                <select
+                                    name="guests"
+                                    class="form-select">
+
+                                    <% for(let i=1;i<=10;i++){ %>
+                                        <option value="<%= i %>">
+                                            <%= i %>
+                                        </option>
+                                    <% } %>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">
+                                    Rooms
+                                </label>
+
+                                <select
+                                    name="rooms"
+                                    class="form-select">
+
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">
+                                    Children
+                                </label>
+
+                                <select
+                                    name="children"
+                                    class="form-select">
+
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">
+                                Special Requests
+                            </label>
+
+                            <textarea
+                                rows="4"
+                                name="specialRequest"
+                                class="form-control"></textarea>
+                        </div>
+
+                        <button
+                            class="btn btn-success w-100 booking-btn">
+                            Confirm Booking
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="col-lg-4">
+
+            <div class="sticky-summary">
+
+                <div class="card booking-card">
+
+                    <img
+                        src="<%= listing.image.url %>"
+                        class="listing-img"
+                        alt="listing image">
+
+                    <div class="card-body">
+
+                        <h4 class="fw-bold">
+                            <%= listing.title %>
+                        </h4>
+
+                        <p class="text-muted mb-2">
+                            <%= listing.location %>,
+                            <%= listing.country %>
+                        </p>
+
+                        <% if(listing.owner){ %>
+                            <p class="mb-3">
+                                Hosted by
+                                <strong>
+                                    <%= listing.owner.username %>
+                                </strong>
+                            </p>
+                        <% } %>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Price / Night</span>
+
+                            <strong>
+                                ₹<%= listing.price.toLocaleString() %>
+                            </strong>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Service Fee</span>
+                            <strong>₹500</strong>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Taxes</span>
+                            <strong>₹300</strong>
+                        </div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <h5 class="mb-0">
+                                Total
+                            </h5>
+
+                            <span class="price">
+                                ₹<%= (listing.price + 800).toLocaleString() %>
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

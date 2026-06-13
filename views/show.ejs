@@ -74,15 +74,21 @@ Hosted by <b></b>
           <% } %>
 
         </div>
-          <button class="btn btn-success">
-                  Book
-           </button>
+<form action="/listings/<%= listing._id %>/bookList">
+    <button class="btn btn-success">
+        Book Now
+    </button>
+</form>
       </div>
 
       
     </div>
   </div>
   <hr>
+
+
+
+  
 <!-- ================= REVIEWS SECTION ================= -->
 <div class="mt-5">
   <h3 class="mb-3">Reviews</h3>

@@ -7,33 +7,44 @@ const sampleListings = require("../init/data");
 //   await mongoose.connect("mongodb://127.0.0.1:27017/wanderLust1");
 //   console.log("conn to DB")
 // }
-const listingSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-
-  image: {
-    url: String,
-    filename: String,
-  },
-  category: String,
-  description: String,
-  price: Number,
-  location: String,
-  country: String,
-  reviews: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Review",
+const listingSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
     },
-  ],
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-});
 
+    image: {
+      url: String,
+      filename: String,
+    },
+    category: String,
+    description: String,
+    price: Number,
+    
+    location: {
+      country: String,
+      state: String,
+      city: String,
+      address: String,
+    },
+    reviews: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    views: {
+      type: Number,
+      default: 0,
+    },
+  },
+  { timestamps: true },
+);
 
 // data.forEach(element => {
 //   const newList=Listing.save({
@@ -59,4 +70,3 @@ const Listing = mongoose.model("Listing", listingSchema);
 // };
 // initDB();
 module.exports = Listing;
-

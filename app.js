@@ -74,6 +74,13 @@ app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
 app.get("/", (req, res) => res.redirect("/listings"));
+app.get("/dashboard",(req,res)=>{
+  res.render("dashboard");
+})
+
+// app.get("/booking",(req,res)=>{
+//   res.render("booking")
+// })
 
 // 404 handler
 app.all("*", (req, res, next) => next(new ExpressError(404, "Page Not Found")));
@@ -84,5 +91,7 @@ app.use((err, req, res, next) => {
   if (!err.message) err.message = "Something Went Wrong!";
   res.status(statusCode).render("error", { err });
 });
+
+
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
